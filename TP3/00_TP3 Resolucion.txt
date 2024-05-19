@@ -1,0 +1,82 @@
+HILOS:
+
+Ejecución 1 (Tarea Sin hilos)
+-----------------------------
+
+- Al ejecutar el programa "tareas_SIN_hilos.py" se observa que la tarea uno tarda aproximadamente entre 18.200 segundos
+y 18.700 segundos en ejecutarse (mucho) y las tareas 2 y 3 le siguen variando entre 1.00149-1.00930 y 4.00302-4.01924
+respectivamente. Estas ejecuciones demuestran que los tiempos van a ser similares en cada ejecución, siendo la alta
+demora del 1er. proceso producto de la velocidad del procesador y de la máquina utilizada (Intel Celeron 1005M - 16GB RAM).
+Los tiempos de las tareas 2 y 3 son predecibles porque ya tienen el tiempo de demora seteado dentr del programa, no
+dependen de la máquina usada.
+
+
+- Un proceso de máxima velocidad posible sería, por ejemplo, en una planilla de Excel, ver el resultado de una suma
+(función suma) de dos valores en una celda cuando cargo un valor en cada una de las otras 2 celdas de las que depende
+la suma: 
+Celda A1=1
+Celda A2=8
+Celda A3= Suma (A1,A2)
+
+- Un proceso de velocidad de respuesta no dependiente de la velocidad de procesamiento sería, por ejemplo, el tiempo de 
+descarga de un videojuego para luego ejecutarlos, de la plataformas online como Steam, Epic Games, etc.
+
+Ejecución 2 (Tarea Con hilos)
+-----------------------------
+
+- Al ejecutar el programa "tareas_CON_hilos.py" se observa que prácticamente no hay mejoras en los tiempos de ejecución,
+las tareas se inician en el orden programado de forma ordenada, pero se terminan de ejecutar en distinto orden, terminando
+siempre en todas las pruebas la "Tarea 1" como última concretada. La diferencia es que las tareas 2 y 3 pueden ejecutarse
+en paralelo y terminar mucho antes ya que no tienen que esperar a que termine la ejecución de la tarea 1.
+
+- Priorizar alguno de los procesos en ejecución sobre el resto es algo común (retomando el último ejemplo de la ejecución
+del programa sin hilos) en el caso de un videojuego, que debe priorizar la parte de renderización de la imagen sobre
+otros procesos paralelos que se ejecutan a la vez.
+
+
+
+CONDICIÓN DE CARRERA (Race Condition):
+
+Ejecución 3 (Sumador-Restador)
+------------------------------
+
+Al ejecutar el programa "sumadro-restador.py" puede observarse en todas pruebas el mismo resultado de la variable local
+"acumulador" que es 0 (cero).
+
+Ejecución 4 (Sumador-Restador CON Race)
+---------------------------------------
+
+Al ejecutar el programa "sumador-restador_CON_race.py" se observa sólo el valor de la variable "acumulador", así que
+agregué, como se mostraba en la imágen de las consignas del práctico, las líneas 33, 42 y 46 con los tiempos de inicio
+y arranque y la muestra de la diferencia de tiempo entre ambos.
+
+- Ahora, ejecutando "sumador-restador_CON_race(con_tiempos).py" puede observarse que los tiempos de ejecución varian
+subiendo o bajando entre los valores aproximados de 0.01 y 0.03 segundos (dependen de la máquina).
+
+- El valor final del "acumulador" varía de manera impredecible entre valores negativos y positivos, quedando pocas veces
+en 0 (cero), el valor que siempre debería tener.
+
+- La variación del valor final del "acumulador" se provoca por la utilización de diferentes hilos para las tareas suma y
+resta del programa ejecutado, ya que usando hilos en simultáneo y recursos compartidos, el "Programador de Tareas" del
+sistema operativo es el que prioriza y decide que hilo ejecutar primero, no nosotros o el programa en su codificación
+actual.
+
+- Para corregir la condición de carrera sin dejar de utilizar hilos habría que agregar al programa, de alguna forma, que
+priorice que hilo correr primero y una vez que termine dar permiso al siguiente hilo.
+
+Ejecución 5 (Sumador-Restador SIN Race)
+---------------------------------------
+
+Al ejecutar el programa "sumador-restador_SIN_race.py" se observa sólo el valor de la variable "acumulador", así que
+agregué las líneas 38, 47 y 50 con los tiempos de inicio y arranque y la muestra de la diferencia de tiempo entre ambos.
+
+-  Ahora, ejecutando "sumador-restador_SIN_race(con_tiempos).py" puede observarse que en todas las ejecuciones, el valor
+final del "acumulador" es el corrrecto, 0 (cero), ya que se da instrucción precisa en el código de que primero opere un
+hilo con el recurso compartido de las funciones y y una vez que haya terminado, que pueda trabajar el siguiente hilo
+usando ese mismo recurso.
+
+- También puede verse que los tiempos de ejecución siguen variando en el mismo rango aproximado que el programa
+"sumador-restador_CON_race.py", sigue dependiendo de la máquina.
+
+
+
